@@ -34,12 +34,10 @@ class RandomNumber extends React.Component<any, IState> {
     }
     return (
       <>
-        {random !== 0 &&
-          shownNumbers.length < 90 &&
-          shownNumbers.length !== 0 && <h2>El número es <CurrentNumber random={random} /></h2>}{" "}
         {!running && shownNumbers.length === 0 && (
           <button onClick={this.start}>Start</button>
         )}
+        
         {running && <button onClick={this.stop}>Stop</button>}
         {!running && shownNumbers.length > 0 && shownNumbers.length > 90 && (
           <button onClick={this.start}>Resume</button>
@@ -47,9 +45,16 @@ class RandomNumber extends React.Component<any, IState> {
         {!running && shownNumbers.length > 0 && (
           <button onClick={this.reset}>Reset</button>
         )}
+        {random !== 0 &&
+          shownNumbers.length < 90 &&
+          shownNumbers.length !== 0 && (
+            <h2>
+              El número es el <CurrentNumber random={random} />
+            </h2>
+          )}{" "}
         <Numbers shownNumbers={shownNumbers} />
       </>
-    );
+    )
   }
 
   reset = () => {
