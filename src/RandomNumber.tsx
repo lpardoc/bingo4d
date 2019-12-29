@@ -1,6 +1,7 @@
 import React from "react";
 import Numbers from "./Numbers";
 import CurrentNumber from "./CurrentNumber";
+import "./RandomNumber.css"
 
 interface IState {
   random: number;
@@ -35,16 +36,16 @@ class RandomNumber extends React.Component<any, IState> {
     return (
       <>
         {!running && shownNumbers.length === 0 && (
-          <button onClick={this.start}>Start</button>
+          <button className="btn btn-success buttons" onClick={this.start}>Start</button>
         )}
         
-        {running && <button onClick={this.stop}>Stop</button>}
-        {!running && shownNumbers.length > 0 && shownNumbers.length < 90 && (<button onClick={this.start}>Resume</button>)}
-        {!running && shownNumbers.length > 0 && (<button onClick={this.reset}>Reset</button>)}
+        {running && <button  className="btn btn-light buttons" onClick={this.stop}>Stop</button>}
+        {!running && shownNumbers.length > 0 && shownNumbers.length < 90 && (<button className="btn btn-warning buttons" onClick={this.start}>Resume</button>)}
+        {!running && shownNumbers.length > 0 && (<button className="btn btn-danger buttons" onClick={this.reset}>Reset</button>)}
         {random !== 0 &&
           shownNumbers.length < 90 &&
           shownNumbers.length !== 0 && (
-            <h2>
+            <h2 className="currentNumber">
               El número es el <CurrentNumber random={random} />
             </h2>
           )}{" "}
