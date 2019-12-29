@@ -26,20 +26,26 @@ class RandomNumber extends React.Component<any, IState> {
   }
 
   render() {
-    const { random, numbersToBeShown, running } = this.state;
+    const { random, numbersToBeShown, running, shownNumbers } = this.state;
     if (numbersToBeShown.length === 1 && running) {
       this.stop();
     }
     return (
       <>
-        {random !== 0 && running && <h2>El número es {random}</h2>}{" "}
-        {!running && <button onClick={this.start}>Start</button>}
+        {random !== 0 && shownNumbers.length < 90 && <h2>El número es {random}</h2>}{" "}
+        {!running && shownNumbers.length == 0 && <button onClick={this.start}>Start</button>}
         {running && <button onClick={this.stop}>Stop</button>}
+        {!running && shownNumbers.length > 0 && <button onClick={this.start}>Resume</button>}
+        <p>Números que ya han salido:</p>
+        {shownNumbers.map(numbers => (
+          <span> {numbers},</span>
+        ))}
       </>
     );
   }
 
-  getRandom = () => Math.floor(Math.random() * (this.state.numbersLeft - 1) + 1);
+  getRandom = () =>
+    Math.floor(Math.random() * (this.state.numbersLeft - 1) + 1);
 
   start = () => {
     this.interval = setInterval(() => this.getNewNumber(), 50);
@@ -47,10 +53,9 @@ class RandomNumber extends React.Component<any, IState> {
   };
 
   stop = () => {
-    
     clearInterval(this.interval);
     this.setState({ running: false });
-    console.log("Stop")
+    console.log("Stop");
   };
 
   getNewNumber = () => {
@@ -63,10 +68,10 @@ class RandomNumber extends React.Component<any, IState> {
 
     console.log("Current number: " + currentNumber);
     console.log("shownnumbers number: " + shownNumbers);
-    console.log("Numbers left: " + numbersToBeShown)
+    console.log("Numbers left: " + numbersToBeShown);
 
     shownNumbers.push(currentNumber);
-
+    shownNumbers.sort((a, b) => a - b)
     this.setState(() => ({ random: currentNumber }));
     this.setState(({ numbersLeft }) => ({ numbersLeft: numbersLeft - 1 }));
   };
