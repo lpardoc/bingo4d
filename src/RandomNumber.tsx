@@ -16,7 +16,7 @@ class RandomNumber extends React.Component<any, IState> {
     super(props);
 
     this.state = {
-      random: 0,
+      random: NaN,
       shownNumbers: [],
       numbersLeft: 91,
       numbersToBeShown: Array.from(Array(91).keys()),
@@ -39,12 +39,8 @@ class RandomNumber extends React.Component<any, IState> {
         )}
         
         {running && <button onClick={this.stop}>Stop</button>}
-        {!running && shownNumbers.length > 0 && shownNumbers.length > 90 && (
-          <button onClick={this.start}>Resume</button>
-        )}
-        {!running && shownNumbers.length > 0 && (
-          <button onClick={this.reset}>Reset</button>
-        )}
+        {!running && shownNumbers.length > 0 && shownNumbers.length < 90 && (<button onClick={this.start}>Resume</button>)}
+        {!running && shownNumbers.length > 0 && (<button onClick={this.reset}>Reset</button>)}
         {random !== 0 &&
           shownNumbers.length < 90 &&
           shownNumbers.length !== 0 && (
