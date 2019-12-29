@@ -1,4 +1,6 @@
 import React from "react";
+import Numbers from "./Numbers";
+import CurrentNumber from "./CurrentNumber";
 
 interface IState {
   random: number;
@@ -32,28 +34,37 @@ class RandomNumber extends React.Component<any, IState> {
     }
     return (
       <>
-        {random !== 0 && shownNumbers.length < 90 && <h2>El número es {random}</h2>}{" "}
-        {!running && shownNumbers.length === 0 && <button onClick={this.start}>Start</button>}
+        {random !== 0 &&
+          shownNumbers.length < 90 &&
+          shownNumbers.length !== 0 && <h2>El número es <CurrentNumber random={random} /></h2>}{" "}
+        {!running && shownNumbers.length === 0 && (
+          <button onClick={this.start}>Start</button>
+        )}
         {running && <button onClick={this.stop}>Stop</button>}
-        {!running && shownNumbers.length > 0 && <button onClick={this.start}>Resume</button>}
-        {!running && shownNumbers.length > 0 && <button onClick={this.reset}>Reset</button>}
-        <p>Números que ya han salido:</p>
-        {shownNumbers.map(numbers => (
-          <span> {numbers},</span>
-        ))}
+        {!running && shownNumbers.length > 0 && shownNumbers.length > 90 && (
+          <button onClick={this.start}>Resume</button>
+        )}
+        {!running && shownNumbers.length > 0 && (
+          <button onClick={this.reset}>Reset</button>
+        )}
+        <Numbers shownNumbers={shownNumbers} />
       </>
     );
   }
 
-reset = () => {
-  this.setState({shownNumbers: [], numbersLeft: 91, numbersToBeShown: Array.from(Array(91).keys())})
-}
+  reset = () => {
+    this.setState({
+      shownNumbers: [],
+      numbersLeft: 91,
+      numbersToBeShown: Array.from(Array(91).keys())
+    });
+  };
 
   getRandom = () =>
     Math.floor(Math.random() * (this.state.numbersLeft - 1) + 1);
 
   start = () => {
-    this.interval = setInterval(() => this.getNewNumber(), 50);
+    this.interval = setInterval(() => this.getNewNumber(), 5000);
     this.setState({ running: true });
   };
 
@@ -76,7 +87,7 @@ reset = () => {
     console.log("Numbers left: " + numbersToBeShown);
 
     shownNumbers.push(currentNumber);
-    shownNumbers.sort((a, b) => a - b)
+    shownNumbers.sort((a, b) => a - b);
     this.setState(() => ({ random: currentNumber }));
     this.setState(({ numbersLeft }) => ({ numbersLeft: numbersLeft - 1 }));
   };
