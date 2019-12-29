@@ -33,9 +33,10 @@ class RandomNumber extends React.Component<any, IState> {
     return (
       <>
         {random !== 0 && shownNumbers.length < 90 && <h2>El número es {random}</h2>}{" "}
-        {!running && shownNumbers.length == 0 && <button onClick={this.start}>Start</button>}
+        {!running && shownNumbers.length === 0 && <button onClick={this.start}>Start</button>}
         {running && <button onClick={this.stop}>Stop</button>}
         {!running && shownNumbers.length > 0 && <button onClick={this.start}>Resume</button>}
+        {!running && shownNumbers.length > 0 && <button onClick={this.reset}>Reset</button>}
         <p>Números que ya han salido:</p>
         {shownNumbers.map(numbers => (
           <span> {numbers},</span>
@@ -43,6 +44,10 @@ class RandomNumber extends React.Component<any, IState> {
       </>
     );
   }
+
+reset = () => {
+  this.setState({shownNumbers: [], numbersLeft: 91, numbersToBeShown: Array.from(Array(91).keys())})
+}
 
   getRandom = () =>
     Math.floor(Math.random() * (this.state.numbersLeft - 1) + 1);
