@@ -1,5 +1,11 @@
 .buttons {
   margin-right: 5px;
+  padding-right: 3rem;
+  padding-left: 3rem;
+  border-radius: 20px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  font-size: 20px;
 }
 
 .currentNumber {
